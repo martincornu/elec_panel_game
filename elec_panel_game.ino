@@ -1,13 +1,11 @@
 static int nb_pairs = 5;
 
 static int first_input = 8;   //Num. of first arduino input.
-static int first_output = 2;   //Num. of first arduino output.
+static int first_output = 2;  //Num. of first arduino output.
 
 int8_t index = -1;
 
 void setup() {
-  // put your setup code here, to run once:
-
   Serial.begin(9600);
   
   //Outputs 2-6
@@ -27,6 +25,8 @@ void setup() {
 
 void loop() {
 
+  bool isPlugOk = true;
+
   for (int i = 0; i<nb_pairs; i++) {
     //Set i_output to low - like connected to ground for pullup inputs.
     digitalWrite(first_output+i, LOW);
@@ -36,11 +36,20 @@ void loop() {
     Serial.print("eme elec tab input plug to : ");
     Serial.print(index);
     digitalWrite(first_output+i, HIGH);
+
+    if (index != ((first_output+i)+6)) {
+      isPlugOk = false;
+      Serial.print(" -> false");
+    }
   }
 
+  if (isPlugOk == true) {
+    Serial.println();
+    Serial.println("OKKKKKKK !");
+  }
+  
   Serial.println();
   delay(1000);
-  
 }
 
 int8_t scan_inputs() {
@@ -61,4 +70,5 @@ int8_t scan_inputs() {
 
   return res;
 }
+
 

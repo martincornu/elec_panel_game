@@ -1,7 +1,9 @@
-static int nb_pairs = 5;
+static uint8_t nb_pairs = 5;      //Num. of pairs to plug.
 
-static int first_input = 8;   //Num. of first arduino input.
-static int first_output = 2;  //Num. of first arduino output.
+static uint8_t first_input = 8;   //Num. of first arduino input.
+static uint8_t first_output = 2;  //Num. of first arduino output.
+
+static uint8_t relais = 13;
 
 int8_t index = -1;
 
@@ -21,6 +23,8 @@ void setup() {
   pinMode(first_input+2,INPUT_PULLUP);
   pinMode(first_input+3,INPUT_PULLUP);
   pinMode(first_input+4,INPUT_PULLUP);
+
+  digitalWrite(relais, LOW);
 }
 
 void loop() {
@@ -46,6 +50,9 @@ void loop() {
   if (isPlugOk == true) {
     Serial.println();
     Serial.println("OKKKKKKK !");
+    digitalWrite(relais, HIGH);
+  } else {
+    digitalWrite(relais, LOW);
   }
   
   Serial.println();
